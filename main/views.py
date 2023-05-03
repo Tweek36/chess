@@ -25,7 +25,8 @@ def add_player_ajax(request):
 def set_winner_ajax(request):
     game = Game.objects.get(pk=request.GET['game'])
     game.set_winner(Player.objects.get(pk=request.GET['winner']))
-    return JsonResponse({'ok':'ok'})
+    next_game = game.get_next_game()
+    return JsonResponse({'next_game':next_game.id})
 
 def add_competition_ajax(request):
     list_players = json.loads(request.GET.get('players'))
